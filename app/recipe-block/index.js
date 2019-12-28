@@ -3,7 +3,7 @@ import './editor.scss';
 
 const {registerBlockType} = wp.blocks;
 const {__} = wp.i18n;
-const {InspectorControls} = wp.blockEditor;
+const {InspectorControls, BlockControls, AlignmentToolbar} = wp.blockEditor;
 const {PanelBody, PanelRow, TextControl, SelectControl} = wp.components;
 
 registerBlockType(
@@ -48,6 +48,9 @@ registerBlockType(
                 source: 'text',
                 default: 'Breakfast',
                 selector: '.meal-type-ph'
+            },
+            text_alignment: {
+                type: 'string'
             }
         },
         edit: (props) => {
@@ -110,7 +113,16 @@ registerBlockType(
                     </PanelBody>
                 </InspectorControls>,
                 <div className={props.className}>
-                    <ul class="list-unstyled">
+                    <BlockControls>
+                        <AlignmentToolbar
+                            value={props.attributes.text_alignment}
+                            onChange={(new_val) => {
+                                props.setAttributes({text_alignment: new_val})
+                            }}
+                        />
+                    </BlockControls>
+                    <ul class="list-unstyled"
+                        style={{textAlign: props.attributes.text_alignment}}>
                         <li><strong>{__('Ingredients', 'recipe')}: </strong> <span className="ingredients-ph">{props.attributes.ingredients}</span></li>
                         <li><strong>{__('Cooking Time', 'recipe')}: </strong> <span className="cooking-time-ph">{props.attributes.cooking_time}</span></li>
                         <li><strong>{__('Utensils', 'recipe')}: </strong> <span className="utensils-ph">{props.attributes.utensils}</span></li>
@@ -123,7 +135,8 @@ registerBlockType(
         save: (props) => {
             return (
                 <div>
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled"
+                        style={{textAlign: props.attributes.text_alignment}}>
                         <li><strong>{__('Ingredients', 'recipe')}: </strong> <span className="ingredients-ph">{props.attributes.ingredients}</span></li>
                         <li><strong>{__('Cooking Time', 'recipe')}: </strong> <span className="cooking-time-ph">{props.attributes.cooking_time}</span></li>
                         <li><strong>{__('Utensils', 'recipe')}: </strong> <span className="utensils-ph">{props.attributes.utensils}</span></li>
