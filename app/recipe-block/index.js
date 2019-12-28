@@ -20,71 +20,89 @@ registerBlockType(
         supports: {
             html: false
         },
+        attributes: {
+            ingredients: {
+                source: 'text',
+            },
+            cooking_time: {
+                source: 'text',
+            },
+            utensils: {
+                source: 'text',
+            },
+            cooking_experience: {
+                source: 'text',
+            },
+            meal_type: {
+                source: 'text',
+            }
+        },
         edit: (props) => {
-            // console.log(props);
             return [
                 <InspectorControls>
                     <PanelBody title={__('Basics', 'recipe')}>
                         <PanelRow>
                             <p>{__('Configure the contents of the block here.', 'recipe')}</p>
                         </PanelRow>
-                        <TextControl label={__('Ingredients', 'recipe')}
-                        help={__('example: tomatoes, lettuce, olive oil, etc.', 'recipe')}
-                        value="test"
-                        onChange={(new_val) => {
-                            console.log(new_val);
-                        }}
+                        <TextControl
+                            label={__('Ingredients', 'recipe')}
+                            help={__('example: tomatoes, lettuce, olive oil, etc.', 'recipe')}
+                            value={props.attributes.ingredients}
+                            onChange={(new_val) => {
+                                props.setAttributes({ingredients: new_val})
+                            }}
                         />
-                        <TextControl label={__('Cooking Time', 'recipe')}
-                        help={__('How long will this take to cook?', 'recipe')}
-                        value="test"
-                        onChange={(new_val) => {
-                            console.log(new_val);
-                        }}
+                        <TextControl 
+                            label={__('Cooking Time', 'recipe')}
+                            help={__('How long will this take to cook?', 'recipe')}
+                            value={props.attributes.cooking_time}
+                            onChange={(new_val) => {
+                                props.setAttributes({cooking_time: new_val})
+                            }}
                         />
                         <TextControl
                             label={__('Utensils', 'recipe')}
                             help={__('What Utensils will you need?', 'recipe')}
-                            value="test"
+                            value={props.attributes.utensils}
                             onChange={(new_val) => {
-                                console.log(new_val);
+                                props.setAttributes({utensils: new_val})
                             }}
                         />
                         <SelectControl
                             label={__( 'Cooking Experience', 'recipe')}
                             help={__('How skilled should the user be?', 'recipe')}
-                            value="Beginner"
                             options={[
                                 {value: 'Beginner', label: 'Beginner'},
                                 {value: 'Intermediate', label: 'Intermediate'},
                                 {value: 'Expert', label: 'Expert'}
                             ]}
+                            value={props.attributes.cooking_experience}
                             onChange={(new_val) => {
-                                console.log(new_val)
+                                props.setAttributes({cooking_experience: new_val})
                             }}
                         />
                         <SelectControl
                             label={__( 'Meal Type', 'recipe')}
                             help={__('When is this best eaten?', 'recipe')}
-                            value="Breakfast"
                             options={[
                                 {value: 'Breakfast', label: 'Breakfast'},
                                 {value: 'Lunch', label: 'Lunch'},
                                 {value: 'Dinner', label: 'Dinner'}
                             ]}
+                            value={props.attributes.meal_type}
                             onChange={(new_val) => {
-                                console.log(new_val)
+                                props.setAttributes({meal_type: new_val})
                             }}
                         />
                     </PanelBody>
                 </InspectorControls>,
                 <div className={props.className}>
                     <ul class="list-unstyled">
-                        <li><strong>{__('Ingredients', 'recipe')}: </strong> INGREDIENTS_PH</li>
-                        <li><strong>{__('Cooking Time', 'recipe')}: </strong> COOKING_TIME_PH</li>
-                        <li><strong>{__('Utensils', 'recipe')}: </strong> UTENSILS_PH</li>
-                        <li><strong>{__('Cooking Experience', 'recipe')}: </strong> LEVEL_PH</li>
-                        <li><strong>{__('Meal Type', 'recipe')}: </strong> TYPE_PH</li>
+                        <li><strong>{__('Ingredients', 'recipe')}: </strong> {props.attributes.ingredients}</li>
+                        <li><strong>{__('Cooking Time', 'recipe')}: </strong> {props.attributes.cooking_time}</li>
+                        <li><strong>{__('Utensils', 'recipe')}: </strong> {props.attributes.utensils}</li>
+                        <li><strong>{__('Cooking Experience', 'recipe')}: </strong> {props.attributes.cooking_experience}</li>
+                        <li><strong>{__('Meal Type', 'recipe')}: </strong> {props.attributes.meal_type}</li>
                     </ul>
                 </div>
             ];
