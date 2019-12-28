@@ -1,4 +1,5 @@
 import block_icons from '../icons';
+import './editor.scss';
 
 const {registerBlockType} = wp.blocks;
 const {__} = wp.i18n;
