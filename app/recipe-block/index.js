@@ -3,7 +3,7 @@ import './editor.scss';
 
 const {registerBlockType} = wp.blocks;
 const {__} = wp.i18n;
-const {InspectorControls, BlockControls, AlignmentToolbar} = wp.blockEditor;
+const {InspectorControls, BlockControls, AlignmentToolbar, BlockAlignmentToolbar} = wp.blockEditor;
 const {PanelBody, PanelRow, TextControl, SelectControl} = wp.components;
 
 registerBlockType(
@@ -51,6 +51,15 @@ registerBlockType(
             },
             text_alignment: {
                 type: 'string'
+            },
+            block_alignment: {
+                type: 'string',
+                default: 'wide'
+            }
+        },
+        getEditWrapperProps: ({block_alignment}) => {
+            if('left' === block_alignment || 'right' === block_alignment || 'full' === block_alignment) {
+                return{ 'data-align': block_alignment };
             }
         },
         edit: (props) => {
@@ -114,6 +123,12 @@ registerBlockType(
                 </InspectorControls>,
                 <div className={props.className}>
                     <BlockControls>
+                        <BlockAlignmentToolbar
+                            value={props.attributes.block_alignment}
+                            onChange={(new_val) => {
+                                props.setAttributes({block_alignment: new_val})
+                            }}
+                        />
                         <AlignmentToolbar
                             value={props.attributes.text_alignment}
                             onChange={(new_val) => {
@@ -134,7 +149,7 @@ registerBlockType(
         },
         save: (props) => {
             return (
-                <div>
+                <div className={`align${props.attributes.block_alignment}`}>
                     <ul class="list-unstyled"
                         style={{textAlign: props.attributes.text_alignment}}>
                         <li><strong>{__('Ingredients', 'recipe')}: </strong> <span className="ingredients-ph">{props.attributes.ingredients}</span></li>
