@@ -45,7 +45,7 @@ registerBlockType( 'udemy/night-mode', {
                     <Toolbar>
                         <Tooltip text={__('Night mode', 'recipe')}>
                             <Button
-                                className={classnames(
+                                 className={classnames(
                                     'components-icon-button',
                                     'components-toolbar__control',
                                     {'is-active': props.attributes.night_mode}
