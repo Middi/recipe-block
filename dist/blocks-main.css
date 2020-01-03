@@ -11,3 +11,7 @@ body {
   padding: 0;
   font-family: 'Lato'; }
 
+.wp-block-udemy-night-mode .night {
+  background-color: #333;
+  color: #ddd; }
+
